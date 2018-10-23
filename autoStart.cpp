@@ -64,7 +64,7 @@ bool init_log(void)
 	if (log_file) {
 		return true;
 	}
-	log_file = fopen("plugins/season_changer/season_changer.log", "wt");
+	log_file = fopen("plugins/autoStart.log", "wt");
 	if (!log_file) {
 		return false;
 	}
@@ -164,16 +164,26 @@ void read_config()
 		create_config();
 	}
 	wchar_t splitbuffer[4096];
-	GetPrivateProfileString(lpSection, L"autostart", L"", splitbuffer, sizeof(splitbuffer), lpFileName);
+	GetPrivateProfileString(lpSection, L"after_sdk_warning", L"", splitbuffer, sizeof(splitbuffer), lpFileName);
 	read_split_list(splitbuffer, after_sdk_warning, ',');
+	for (const auto &app : after_sdk_warning)
+		log_line("after_sdk_warning[]: \"%s\"", app.c_str());
 	GetPrivateProfileString(lpSection, L"on_sdk_config", L"", splitbuffer, sizeof(splitbuffer), lpFileName);
 	read_split_list(splitbuffer, on_sdk_config, ',');
+	for (const auto &app : on_sdk_config)
+		log_line(")[]: \"%s\"", app.c_str());
 	GetPrivateProfileString(lpSection, L"on_game_pause", L"", splitbuffer, sizeof(splitbuffer), lpFileName);
 	read_split_list(splitbuffer, on_game_pause, ',');
+	for (const auto &app : on_game_pause)
+		log_line("on_game_pause[]: \"%s\"", app.c_str());
 	GetPrivateProfileString(lpSection, L"on_game_resume", L"", splitbuffer, sizeof(splitbuffer), lpFileName);
 	read_split_list(splitbuffer, on_game_resume, ',');
+	for (const auto &app : on_game_resume)
+		log_line("on_game_resume[]: \"%s\"", app.c_str());
 	GetPrivateProfileString(lpSection, L"on_game_exit", L"", splitbuffer, sizeof(splitbuffer), lpFileName);
 	read_split_list(splitbuffer, on_game_exit, ',');
+	for (const auto &app : on_game_exit)
+		log_line("on_game_exit[]: \"%s\"", app.c_str());
 	log_line("Loaded config %ls\n", lpFileName);
 }
 
