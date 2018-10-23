@@ -1,4 +1,4 @@
-﻿# SCS Software Autostart plugin
+# SCS Software Autostart plugin
 
 ## Description
 
